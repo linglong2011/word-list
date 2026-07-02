@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 移动端核心 viewport 设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单词记忆卡片 - 深色模式</title>
+    <style>
+        /* 1. 全局重置与移动端优化 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding-bottom: 40px; /* 底部留白 */
+            padding-top: 60px; /* 关键：为固定导航栏预留高度，防止内容被遮挡 */
+        }
+
+        /* 2. 固定到顶部的日期导航栏 */
+        .nav-bar {
+            position: fixed; /* 修改为 fixed，使其脱离文档流并固定在视口顶部 */
+            top: 0;
+            left: 0;
+            width: 100%; /* 确保宽度占满整个屏幕 */
+            z-index: 100;
+            background: rgba(18, 18, 18, 0.95); /* 稍微提高不透明度，防止滚动时内容透出 */
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto; /* 允许横向滚动 */
+            scrollbar-width: none; 
+            border-bottom: 1px solid #2c2c2c;
+        }
+        .nav-bar::-webkit-scrollbar { display: none; } /* 隐藏横向滚动条 */
+
+        /* 导航按钮样式 */
+        .nav-btn {
+            flex-shrink: 0; 
+            padding: 6px 14px;
+            background: #2c2c2c;
+            color: #ccc;
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 3. 单词列表容器 */
+        .word-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px; /* 列表内部左右 padding，顶部 padding 由 body 提供 */
+        }
+
+        /* 4. 日期分组标题样式 */
+        .date-header {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 16px;
+            margin-bottom: -4px;
+            padding-left: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            scroll-margin-top: 60px; /* 关键：滚动定位时预留顶部导航栏的高度 */
+        }
+
+        /* 5. 单词卡片样式 */
+        .word-item {
+            background: #1e1e1e;
+            border-radius: 2px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+            user-select: none;
+            border: 1px solid #2c2c2c;
+        }
+
+        .word-item:active {
+            transform: scale(0.98);
+            background-color: #252525;
+        }
+
+        /* 6. 英文单词样式 */
+        .english {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .icon {
+            font-size: 12px;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .word-item.active .icon {
+            transform: rotate(180deg);
+            color: #888;
+        }
+
+        /* 7. 中文翻译样式 (默认隐藏) */
+        .chinese {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            color: #4fc3f7;
+            font-size: 15px;
+            margin-top: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+        }
+
+        .word-item.active .chinese {
+            max-height: 50px;
+            opacity: 1;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 固定到顶部的日期导航栏 -->
+    <div class="nav-bar">
+        <button class="nav-btn" onclick="scrollToDate('2026-07-02')">07-02</button>
+    </div>
+
+    <div class="word-list">
+        
+        <!-- 日期分组 1 -->
+        <div class="date-header" id="2026-07-02">2026-07-02</div>
+        
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>issues</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 问题；议题；流出物（issue 的复数） &nbsp; v. 发行；发布</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>wiki</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 维基（一种允许多人协作编写的网站或系统）</div>
+        </div>
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>Security</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 安全；保障；证券</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>quality</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 质量；品质；特质 &nbsp; adj. 高质量的</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>overview</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 概述；概观；综述</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>dependabot</span><span class="icon">▼</span></div>
+            <div class="chinese">n. [GitHub] 依赖机器人（自动检测并更新依赖项的工具）</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>malware</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 恶意软件</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>disabled</span><span class="icon">▼</span></div>
+            <div class="chinese">adj. 禁用的；残疾的 &nbsp; v. 使失去能力（disable 的过去式）</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>vulnerabilities</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 漏洞；弱点；脆弱性（vulnerability 的复数）</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>secret</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 秘密；密钥 &nbsp; adj. 秘密的</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>Reporting</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 报告；汇报 &nbsp; v. 报告（report 的现在分词）</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>policy</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 政策；方针；保险单</div>
+        </div>
+
+        <div class="word-item" onclick="toggleMeaning(this)">
+            <div class="english"><span>advisories</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 公告；安全通告（advisory 的复数）</div>
+        </div>
+
+    </div>
+
+    <script>
+        /**
+         * 切换单词释义的显示/隐藏
+         * @param {HTMLElement} element - 被点击的单词卡片 DOM 元素
+         */
+        function toggleMeaning(element) {
+            element.classList.toggle('active');
+        }
+
+        /**
+         * 滚动到指定日期的位置
+         * @param {string} dateStr - 日期字符串，例如 "2026-06-30"
+         */
+        function scrollToDate(dateStr) {
+            // 通过 ID 查找对应的日期标题元素
+            const targetElement = document.getElementById(dateStr);
+            if (targetElement) {
+                // 平滑滚动到该元素位置
+                // scroll-margin-top 确保元素不会被顶部导航栏遮挡
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+</body>
+</html>
+
+
