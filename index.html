@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <!-- 移动端核心 viewport 设置 -->
@@ -19,32 +20,43 @@
             background-color: #121212;
             color: #e0e0e0;
             min-height: 100vh;
-            padding-bottom: 40px; /* 底部留白 */
-            padding-top: 60px; /* 关键：为固定导航栏预留高度，防止内容被遮挡 */
+            padding-bottom: 40px;
+            /* 底部留白 */
+            padding-top: 60px;
+            /* 关键：为固定导航栏预留高度，防止内容被遮挡 */
         }
 
         /* 2. 固定到顶部的日期导航栏 */
         .nav-bar {
-            position: fixed; /* 修改为 fixed，使其脱离文档流并固定在视口顶部 */
+            position: fixed;
+            /* 修改为 fixed，使其脱离文档流并固定在视口顶部 */
             top: 0;
             left: 0;
-            width: 100%; /* 确保宽度占满整个屏幕 */
+            width: 100%;
+            /* 确保宽度占满整个屏幕 */
             z-index: 100;
-            background: rgba(18, 18, 18, 0.95); /* 稍微提高不透明度，防止滚动时内容透出 */
-            backdrop-filter: blur(10px); 
+            background: rgba(18, 18, 18, 0.95);
+            /* 稍微提高不透明度，防止滚动时内容透出 */
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 12px 20px;
             display: flex;
             gap: 10px;
-            overflow-x: auto; /* 允许横向滚动 */
-            scrollbar-width: none; 
+            overflow-x: auto;
+            /* 允许横向滚动 */
+            scrollbar-width: none;
             border-bottom: 1px solid #2c2c2c;
         }
-        .nav-bar::-webkit-scrollbar { display: none; } /* 隐藏横向滚动条 */
+
+        .nav-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 隐藏横向滚动条 */
 
         /* 导航按钮样式 */
         .nav-btn {
-            flex-shrink: 0; 
+            flex-shrink: 0;
             padding: 6px 14px;
             background: #2c2c2c;
             color: #ccc;
@@ -67,7 +79,8 @@
             gap: 12px;
             max-width: 600px;
             margin: 0 auto;
-            padding: 0 20px; /* 列表内部左右 padding，顶部 padding 由 body 提供 */
+            padding: 0 20px;
+            /* 列表内部左右 padding，顶部 padding 由 body 提供 */
         }
 
         /* 4. 日期分组标题样式 */
@@ -79,7 +92,8 @@
             padding-left: 4px;
             font-weight: 500;
             letter-spacing: 0.5px;
-            scroll-margin-top: 60px; /* 关键：滚动定位时预留顶部导航栏的高度 */
+            scroll-margin-top: 60px;
+            /* 关键：滚动定位时预留顶部导航栏的高度 */
         }
 
         /* 5. 单词卡片样式 */
@@ -138,127 +152,67 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- 固定到顶部的日期导航栏 -->
     <div class="nav-bar">
-        <button class="nav-btn" onclick="scrollToDate('2026-06-30')">06-30</button>
         <button class="nav-btn" onclick="scrollToDate('2026-07-01')">07-01</button>
-        <button class="nav-btn" onclick="scrollToDate('2026-07-02')">07-02</button>
     </div>
 
     <div class="word-list">
-        
+
         <!-- 日期分组 1 -->
-        <div class="date-header" id="2026-06-30">2026-06-30</div>
-        
+        <div class="date-header" id="2026-06-30">2026-07-01</div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>action</span><span class="icon">▼</span></div>
-            <div class="chinese">n. 行动；活动；作用；诉讼</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>well</span><span class="icon">▼</span></div>
-            <div class="chinese">adv. 好；充分地 &nbsp; adj. 健康的 &nbsp; n. 井</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>sky</span><span class="icon">▼</span></div>
-            <div class="chinese">n. 天空；顶点</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>study</span><span class="icon">▼</span></div>
-            <div class="chinese">v. 学习；研究 &nbsp; n. 书房；学习</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>leader</span><span class="icon">▼</span></div>
-            <div class="chinese">n. 领导者；首领</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>cup</span><span class="icon">▼</span></div>
-            <div class="chinese">n. 杯子；奖杯</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>walk</span><span class="icon">▼</span></div>
-            <div class="chinese">v. 走；步行 &nbsp; n. 散步</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>run</span><span class="icon">▼</span></div>
-            <div class="chinese">v. 跑；经营 &nbsp; n. 奔跑</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>jump</span><span class="icon">▼</span></div>
-            <div class="chinese">v. 跳跃；暴涨 &nbsp; n. 跳跃</div>
+            <div class="english"><span>bossy</span><span class="icon">▼</span></div>
+            <div class="chinese">adj. 专横的；浮雕装饰的；爱指挥他人的 n. 母牛；牛犊 </div>
         </div>
 
-        <!-- 日期分组 2 -->
-        <div class="date-header" id="2026-07-01">2026-07-01</div>
-        
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>hello</span><span class="icon">▼</span></div>
-            <div class="chinese">int. 你好；喂</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>good</span><span class="icon">▼</span></div>
-            <div class="chinese">adj. 好的；优秀的 &nbsp; n. 好处；利益</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>red</span><span class="icon">▼</span></div>
-            <div class="chinese">adj. 红色的 &nbsp; n. 红色</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>orange</span><span class="icon">▼</span></div>
-            <div class="chinese">adj. 橙色的；橘色的 &nbsp; n. 橙子；橘子</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>blue</span><span class="icon">▼</span></div>
-            <div class="chinese">adj. 蓝色的 &nbsp; n. 蓝色</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>big</span><span class="icon">▼</span></div>
-            <div class="chinese">adj. 大的</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>sort</span><span class="icon">▼</span></div>
-            <div class="chinese">v. 分类；整理 &nbsp; n. 种类</div>
-        </div>
-        <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>long</span><span class="icon">▼</span></div>
-            <div class="chinese">adj. 长的；远的</div>
+            <div class="english"><span>wedding</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 结婚；婚礼，婚宴；结合 v. 与…结婚（wed的i... </div>
         </div>
 
-        <!-- 日期分组 3 -->
-        <div class="date-header" id="2026-07-02">2026-07-02</div>
-        
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>my</span><span class="icon">▼</span></div>
-            <div class="chinese">pron. 我的</div>
+            <div class="english"><span>stepmother</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 继母</div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>your</span><span class="icon">▼</span></div>
-            <div class="chinese">pron. 你的；你们的</div>
+            <div class="english"><span>fool</span><span class="icon">▼</span></div>
+            <div class="chinese">vi. 开玩笑；欺骗；戏弄 n. 愚人；傻瓜；受骗者 </div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>it</span><span class="icon">▼</span></div>
-            <div class="chinese">pron. 它</div>
+            <div class="english"><span>previous</span><span class="icon">▼</span></div>
+            <div class="chinese">adj. 以前的；早先的；过早的 adv. 在…以前；在先 </div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>this</span><span class="icon">▼</span></div>
-            <div class="chinese">pron. 这；这个</div>
+            <div class="english"><span>arrogant</span><span class="icon">▼</span></div>
+            <div class="chinese">adj. 自大的，傲慢的</div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>that</span><span class="icon">▼</span></div>
-            <div class="chinese">pron. 那；那个</div>
+            <div class="english"><span>reality</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 现实；真实；实际</div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>here</span><span class="icon">▼</span></div>
-            <div class="chinese">adv. 在这里；到这里</div>
+            <div class="english"><span>pretended</span><span class="icon">▼</span></div>
+            <div class="chinese">adj. 假装的;徒有外表的 传说的;号称的 </div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>hero</span><span class="icon">▼</span></div>
-            <div class="chinese">n. 英雄；男主角</div>
+            <div class="english"><span>deathbed</span><span class="icon">▼</span></div>
+            <div class="chinese">n. 临终之时；临死所卧之床 adj. 临终时作的</div>
         </div>
+
         <div class="word-item" onclick="toggleMeaning(this)">
-            <div class="english"><span>ear</span><span class="icon">▼</span></div>
-            <div class="chinese">n. 耳朵；穗</div>
+            <div class="english"><span>wonderful</span><span class="icon">▼</span></div>
+            <div class="chinese">adj. 极好的, 精彩的, 绝妙的</div>
         </div>
 
     </div>
@@ -287,6 +241,5 @@
         }
     </script>
 </body>
+
 </html>
-
-
